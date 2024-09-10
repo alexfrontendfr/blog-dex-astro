@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getSlugPosts, getTitle, getDesc } from "../../utils";
+import Badge from "../../components/Badge.astro";
+import { getReadingTime } from "../../utils";
+import TableOfContents from "../../components/TableOfContents.astro";
+import SocialShare from "../../components/SocialShare.astro";
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+    const posts = await getSlugPosts()
+    return posts.map((post) => ({
+        params: {slug: post.slug},
+        props: post,
+    }));
+}
+
+const post = Astro.props;
+const { Content, headings } = await post.render();
+
+const allPosts = await getCollection('posts');
+const relatedPosts = allPosts
+  .filter(p => p.slug !== post.slug && p.data.tags?.some(tag => post.data.tags?.includes(tag)))
+  .slice(0, 3);
+
+const readingTime = getReadingTime(await post.body);
+---
+
+<MainLayout title={getTitle(post.data.title)} description={getDesc(post.data.description)}>
+  <article class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-4">{post.data.title}</h1>
+    <div class="flex flex-wrap gap-4 mb-8">
+      <Badge icon="material-symbols:edit-calendar-rounded">
+        {new Date(post.data.pubDate).toLocaleDateString()}
+      </Badge>
+      <Badge icon="material-symbols:timer-outline">
+        {readingTime} min read
+      </Badge>
+    </div>
+    {post.data.heroImage && (
+      <Image
+        src={post.data.heroImage}
+        alt={post.data.title}
+        width={1200}
+        height={600}
+        class="w-full h-auto rounded-lg mb-8"
+      />
+    )}
+    <TableOfContents headings={headings} />
+    <div class="prose dark:prose-invert max-w-none">
+      <Content />
+    </div>
+    <SocialShare url={Astro.url} title={post.data.title} />
+    {relatedPosts.length > 0 && (
+      <div class="mt-12">
+        <h2 class="text-2xl font-bold mb-4">Related Posts</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {relatedPosts.map(relatedPost => (
+            <a href={`/posts/${relatedPost.slug}`} class="block bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+              <Image
+                src={relatedPost.data.heroImage || "/placeholder-image.jpg"}
+                alt={relatedPost.data.title}
+                width={400}
+                height={200}
+                class="w-full h-40 object-cover"
+              />
+              <div class="p-4">
+                <h3 class="text-lg font-semibold mb-2">{relatedPost.data.title}</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-300">{relatedPost.data.description}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </article>
+</MainLayout>

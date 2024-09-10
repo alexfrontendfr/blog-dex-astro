@@ -1,0 +1,62 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+import {getEntry} from 'astro:content';
+import {getDesc, getTitle} from "../utils";
+import {Icon} from 'astro-icon/components';
+import {socialLinks} from '../config';
+
+const about = await getEntry('pages', 'about')
+const {data, render} = about;
+const {Content} = await render()
+---
+<PageLayout title={getTitle('About')} description={getDesc('The About Page')}>
+    <article class="article-global" data-pagefind-body>
+        <h1>{data.title}</h1>
+        <Content/>
+        
+        <div class="flex self-center mt-2 space-x-2">
+            {
+                socialLinks.map((link) => (
+                    <a href={link.url} target="_blank">
+                        <Icon class="w-8 h-8 hover:text-secondary transition-all" name={link.icon}/>
+                    </a>
+                ))
+            }
+        </div>
+
+        <h2 class="text-2xl font-bold mt-8 mb-4">Contact Me</h2>
+        <form id="contact-form" class="space-y-4">
+            <div>
+                <label for="name" class="block mb-1">Name</label>
+                <input type="text" id="name" name="name" required class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <label for="email" class="block mb-1">Email</label>
+                <input type="email" id="email" name="email" required class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary">
+            </div>
+            <div>
+                <label for="message" class="block mb-1">Message</label>
+                <textarea id="message" name="message" required class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary" rows="4"></textarea>
+            </div>
+            <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors">Send Message</button>
+        </form>
+    </article>
+</PageLayout>
+
+<script>
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            body: formData
+        });
+        if (response.ok) {
+            alert('Message sent successfully!');
+            form.reset();
+        } else {
+            alert('There was an error sending your message. Please try again.');
+        }
+    });
+</script>

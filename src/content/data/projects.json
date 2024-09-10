@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Astro Blur",
+    "repo": "https://github.com/Jazee6/astro-blur",
+    "description": "A static blog theme built with Astro",
+    "image": "/project-images/astro-blur.png"
+  },
+  {
+    "title": "AI Assistant",
+    "repo": "https://github.com/TheeDex/ai-assistant",
+    "description": "An AI-powered personal assistant",
+    "image": "/project-images/ai-assistant.png"
+  }
+]

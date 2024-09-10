@@ -1,0 +1,38 @@
+---
+// src/pages/tags/[tag].astro
+import { getCollection } from 'astro:content';
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getTitle, getDesc } from '../../utils';
+
+export async function getStaticPaths() {
+    const posts = await getCollection('posts');
+    const tags = [...new Set(posts.flatMap(post => post.data.tags || []))];
+    
+    return tags.map(tag => ({
+        params: { tag },
+        props: { posts: posts.filter(post => post.data.tags?.includes(tag)) },
+    }));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<MainLayout title={getTitle(`Posts tagged with ${tag}`)} description={getDesc(`Posts tagged with ${tag}`)}>
+    <div class="grow">
+        <h1 class="text-3xl font-bold mb-4">Posts tagged with "{tag}"</h1>
+        <ul class="space-y-4">
+            {posts.map(post => (
+                <li>
+                    <a href={`/posts/${post.slug}`} class="block p-4 bg-base rounded-xl hover:shadow-md transition-shadow">
+                        <h2 class="text-xl font-bold">{post.data.title}</h2>
+                        <p class="mt-2">{post.data.description}</p>
+                        <div class="mt-2 text-sm text-secondary">
+                            {post.data.pubDate.toLocaleDateString()}
+                        </div>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </div>
+</MainLayout>

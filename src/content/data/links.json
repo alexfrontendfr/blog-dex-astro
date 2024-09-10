@@ -1,0 +1,20 @@
+[
+  {
+    "title": "TheeDex's Portfolio",
+    "url": "https://alexfolio.nl",
+    "description": "My personal portfolio website",
+    "avatar": "/avatar.png"
+  },
+  {
+    "title": "AI News Hub",
+    "url": "https://example.com/ai-news",
+    "description": "Latest updates in the world of AI",
+    "avatar": "/link-images/ai-news.png"
+  },
+  {
+    "title": "Tech Trends Blog",
+    "url": "https://example.com/tech-trends",
+    "description": "Exploring emerging technologies and their impact",
+    "avatar": "/link-images/tech-trends.png"
+  }
+]

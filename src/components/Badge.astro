@@ -1,0 +1,15 @@
+---
+/// <reference types="astro/astro-jsx" />
+
+import {Icon} from "astro-icon/components";
+interface Props {
+    icon?: string
+}
+
+const {icon} = Astro.props
+---
+<div class="badge">
+    {icon &&
+            <Icon class="w-6 h-6 mr-1" name={icon}/>}
+    <slot/>
+</div>

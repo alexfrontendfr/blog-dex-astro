@@ -1,0 +1,33 @@
+---
+// src/components/NewsletterSignup.astro
+---
+<div class="newsletter-signup bg-base p-6 rounded-xl shadow-lg mt-4">
+  <h3 class="text-2xl font-bold mb-4">Subscribe to Our Newsletter</h3>
+  <p class="mb-4">Stay updated with our latest posts and tech insights!</p>
+  <form class="flex flex-col sm:flex-row gap-2">
+    <input
+      type="email"
+      placeholder="Enter your email"
+      class="flex-grow px-4 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary"
+      required
+    />
+    <button
+      type="submit"
+      class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
+    >
+      Subscribe
+    </button>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector('.newsletter-signup form');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = form.querySelector('input[type="email"]').value;
+    // Here you would typically send the email to your backend or newsletter service
+    console.log(`Subscribed: ${email}`);
+    alert('Thank you for subscribing!');
+    form.reset();
+  });
+</script>

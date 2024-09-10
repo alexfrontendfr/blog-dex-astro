@@ -1,0 +1,33 @@
+---
+export interface Props {
+  headings: {
+    depth: number;
+    slug: string;
+    text: string;
+  }[];
+}
+
+const { headings } = Astro.props;
+---
+
+<nav class="toc">
+  <h2 class="text-xl font-bold mb-4">Table of Contents</h2>
+  <ul class="space-y-2">
+    {headings.map((heading) => (
+      <li class={`toc-level-${heading.depth}`}>
+        <a href={`#${heading.slug}`} class="hover:text-primary transition-colors">
+          {heading.text}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .toc-level-2 {
+    margin-left: 1rem;
+  }
+  .toc-level-3 {
+    margin-left: 2rem;
+  }
+</style>

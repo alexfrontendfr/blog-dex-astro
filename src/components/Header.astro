@@ -1,0 +1,62 @@
+---
+import { siteConfig, navBarConfig } from "../config";
+import { Icon } from 'astro-icon/components'
+import DarkModeToggle from './DarkModeToggle.astro';
+---
+
+<header class="fixed w-full bg-white dark:bg-gray-800 shadow-md z-10">
+  <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="text-xl font-bold">
+      <a href="/" class="text-primary dark:text-white hover:text-secondary transition-colors">{siteConfig.title}</a>
+    </div>
+
+    <nav class="hidden md:flex space-x-4">
+      <a class="text-primary dark:text-white hover:text-secondary transition-colors" href="/">Home</a>
+      {
+        navBarConfig.links.map((link) => (
+          <a class="text-primary dark:text-white hover:text-secondary transition-colors" href={link.url} target={link.target}>{link.name}</a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center space-x-4">
+      <button id="search" class="text-primary dark:text-white hover:text-secondary transition-colors">
+        <Icon class="w-6 h-6" name="material-symbols:search-rounded"/>
+      </button>
+      <DarkModeToggle />
+      <div class="md:hidden">
+        <button id="mobile-menu-button" class="text-primary dark:text-white hover:text-secondary transition-colors">
+          <Icon class="w-6 h-6" name="material-symbols:menu-rounded"/>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden">
+    <nav class="container mx-auto px-4 py-2">
+      <a class="block py-2 text-primary dark:text-white hover:text-secondary transition-colors" href="/">Home</a>
+      {
+        navBarConfig.links.map((link) => (
+          <a class="block py-2 text-primary dark:text-white hover:text-secondary transition-colors" href={link.url} target={link.target}>{link.name}</a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileMenuButton.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // Add search functionality
+  const searchButton = document.querySelector("#search");
+  searchButton.addEventListener("click", () => {
+    const searchContainer = document.querySelector("#search-container")
+    searchContainer.classList.toggle("hidden")
+    searchContainer.querySelector("input").focus()
+  });
+</script>

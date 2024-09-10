@@ -1,0 +1,25 @@
+---
+title: "About"
+---
+
+import { Icon } from "astro-icon/components";
+import { socialLinks } from "../../config";
+
+# Welcome to TheeDex's Blog
+
+This is TheeDex here, and welcome to my blog page! This is a place for freedom of speech, where we explore the fascinating world of technology, AI, and the changing dynamics of our digital society.
+
+<div className="flex self-center mt-2 space-x-2">
+  {socialLinks.map((link) => (
+    <a href={link.url} target="_blank">
+      <Icon
+        class="w-8 h-8 hover:text-secondary transition-all"
+        name={link.icon}
+      />
+    </a>
+  ))}
+</div>
+
+Feel free to connect with me through any of the platforms above. Let's engage in thought-provoking discussions and explore the future together!
+
+This site is licensed under CC BY-NC 4.0. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/
