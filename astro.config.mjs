@@ -5,10 +5,9 @@ import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import { remarkModifiedTime } from "./src/utils/remark-modified-time";
 import { siteConfig } from "./src/config";
-import { Image } from "astro:assets";
 
 export default defineConfig({
-  site: "https://github.com/alexfrontendfr/blog-dex-astro",
+  site: "https://alexfrontendfr.github.io",
   base: "/blog-dex-astro",
   integrations: [
     mdx(),
@@ -17,7 +16,6 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
     icon(),
-    image(),
   ],
   markdown: {
     shikiConfig: {
