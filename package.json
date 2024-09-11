@@ -1,15 +1,12 @@
 {
-  "name": "astro-blur",
-  "type": "module",
-  "version": "0.2.2",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "postbuild": "pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro",
-    "new": "node scripts/new-post.js"
+    "new": "node scripts/new-post.js",
+    "deploy": "astro build && gh-pages -d dist"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
@@ -23,9 +20,9 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.4.2"
   },
-  "packageManager": "pnpm@9.6.0",
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
+    "gh-pages": "^6.1.1",
     "pagefind": "^1.1.0",
     "tailwindcss-animate": "^1.0.7"
   }

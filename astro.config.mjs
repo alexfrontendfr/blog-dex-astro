@@ -5,10 +5,11 @@ import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import { remarkModifiedTime } from "./src/utils/remark-modified-time";
 import { siteConfig } from "./src/config";
-import image from "@astrojs/image";
+import { Image } from "astro:assets";
 
 export default defineConfig({
-  site: siteConfig.site,
+  site: "https://github.com/alexfrontendfr/blog-dex-astro",
+  base: "/blog-dex-astro",
   integrations: [
     mdx(),
     sitemap(),

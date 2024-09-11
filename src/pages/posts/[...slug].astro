@@ -7,6 +7,7 @@ import { getReadingTime } from "../../utils";
 import TableOfContents from "../../components/TableOfContents.astro";
 import SocialShare from "../../components/SocialShare.astro";
 import { Image } from 'astro:assets';
+import Comments from "../../components/Comments.astro";
 
 export async function getStaticPaths() {
     const posts = await getSlugPosts()
@@ -52,6 +53,10 @@ const readingTime = getReadingTime(await post.body);
       <Content />
     </div>
     <SocialShare url={Astro.url} title={post.data.title} />
+     <div class="mt-12">
+      <h2 class="text-2xl font-bold mb-4">Comments</h2>
+      <Comments articleId={post.slug} />
+    </div>
     {relatedPosts.length > 0 && (
       <div class="mt-12">
         <h2 class="text-2xl font-bold mb-4">Related Posts</h2>
